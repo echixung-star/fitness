@@ -96,3 +96,44 @@ a {
   background-position: center;
   background-size: cover;
 }
+
+.review-panel {
+  animation: review-panel-in 560ms ease both;
+}
+
+.review-side-card {
+  animation: review-side-card-in 520ms ease both;
+}
+
+@keyframes review-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes review-side-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide,
+  .review-panel,
+  .review-side-card {
+    animation: none;
+    transition: none;
+  }
+}
