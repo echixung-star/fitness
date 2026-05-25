@@ -4,6 +4,14 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+if ($IsWindows -or $env:OS -eq "Windows_NT") {
+  $processPath = [Environment]::GetEnvironmentVariable("Path", "Process")
+  if ($processPath) {
+    [Environment]::SetEnvironmentVariable("PATH", $null, "Process")
+    [Environment]::SetEnvironmentVariable("Path", $processPath, "Process")
+  }
+}
+
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
 $PreviewDir = Join-Path $Root ".codex-preview"
 $PidFile = Join-Path $PreviewDir "preview.pid"
@@ -34,6 +42,18 @@ function Get-ProjectPreview {
         return [pscustomobject]@{
           Port = $listener.LocalPort
           ProcessId = $listener.OwningProcess
+        }
+      }
+    }
+  }
+
+  $nextLock = Join-Path $Root ".next\dev\lock"
+  if (Test-Path $nextLock) {
+    foreach ($candidatePort in @(3000, 3001, 3002, 3003, 3004, 3005)) {
+      if (Test-Preview $candidatePort) {
+        return [pscustomobject]@{
+          Port = $candidatePort
+          ProcessId = $null
         }
       }
     }
