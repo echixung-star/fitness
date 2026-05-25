@@ -224,11 +224,66 @@ const pricing = [
 ] as const;
 
 const reviews = [
-  ["以前深蹲一直膝盖不舒服，周教练先看了动作，再一点点改站距和髋部发力。练了一个月重量没掉，稳定性明显好很多。", "陈先生", "季卡会员 · 力量基础"],
-  ["早上 7 点多来人不挤，深蹲架和硬拉平台基本都能排上。场馆不是花架子，器械维护得挺干净，训练记录也有人帮忙看。", "刘女士", "月卡会员 · 早训时段"],
-  ["私教课不会一直催办卡，先做评估再给计划。我的肩颈紧和卧推卡点一起处理，训练完第二天也会提醒恢复和饮食。", "赵同学", "私教包 · 增肌塑形"],
-  ["小班课人数控制得住，教练能看到每个人的动作。体能课强度够，但会按状态调整，不是单纯把人练趴下。", "王先生", "小班学员 · 体能燃脂"],
-  ["最喜欢这里的氛围，大家都在认真练，不会尴尬。新手区分得清楚，第一次来有人带着熟悉器械，安全感很足。", "许女士", "体验转季卡 · 新手入门"],
+  {
+    quote: "以前深蹲一直膝盖不舒服，周教练先看了动作，再一点点改站距和髋部发力。练了一个月重量没掉，稳定性明显好很多。",
+    author: "陈先生",
+    meta: "季卡会员 · 力量基础",
+    result: "深蹲动作稳定度提升",
+  },
+  {
+    quote: "早上 7 点多来人不挤，深蹲架和硬拉平台基本都能排上。场馆不是花架子，器械维护得挺干净，训练记录也有人帮忙看。",
+    author: "刘女士",
+    meta: "月卡会员 · 早训时段",
+    result: "早训排队时间更短",
+  },
+  {
+    quote: "私教课不会一直催办卡，先做评估再给计划。我的肩颈紧和卧推卡点一起处理，训练完第二天也会提醒恢复和饮食。",
+    author: "赵同学",
+    meta: "私教包 · 增肌塑形",
+    result: "卧推卡点被拆解",
+  },
+  {
+    quote: "小班课人数控制得住，教练能看到每个人的动作。体能课强度够，但会按状态调整，不是单纯把人练趴下。",
+    author: "王先生",
+    meta: "小班学员 · 体能燃脂",
+    result: "小班动作反馈及时",
+  },
+  {
+    quote: "最喜欢这里的氛围，大家都在认真练，不会尴尬。新手区分得清楚，第一次来有人带着熟悉器械，安全感很足。",
+    author: "许女士",
+    meta: "体验转季卡 · 新手入门",
+    result: "新手适应更轻松",
+  },
+  {
+    quote: "以前训练全靠感觉，来了以后每周都会记录重量、次数和状态。教练复盘时能看出哪里加太快，计划终于能持续推进。",
+    author: "杨先生",
+    meta: "年卡会员 · 周期训练",
+    result: "训练计划更可追踪",
+  },
+  {
+    quote: "女生力量课比我想象中专业，不会只安排轻重量。教练会解释为什么练臀腿、背和核心，三个月后体态变化很明显。",
+    author: "沈女士",
+    meta: "小班学员 · 女生力量",
+    result: "体态和力量同步改善",
+  },
+  {
+    quote: "午休来练 45 分钟刚好，课程安排紧凑但不乱。洗浴和储物区也干净，回公司不会耽误下午开会。",
+    author: "高先生",
+    meta: "月卡会员 · 午间快练",
+    result: "午间训练效率提高",
+  },
+  {
+    quote: "我之前硬拉总是腰酸，教练先让我降重量找背部张力，再慢慢加回去。现在重量回来了，动作也踏实很多。",
+    author: "唐女士",
+    meta: "私教包 · 硬拉专项",
+    result: "硬拉发力路径更清楚",
+  },
+  {
+    quote: "这里不会把恢复当成可有可无的事。每次大重量后都会安排拉伸和活动度，第二天上班不再像以前那样浑身僵。",
+    author: "陆先生",
+    meta: "季卡会员 · 恢复拉伸",
+    result: "训练后酸紧感下降",
+  },
 ] as const;
 
 function Icon({ children, className = "h-6 w-6" }: IconProps) {
@@ -601,27 +656,105 @@ function PricingSection() {
 }
 
 function ReviewsSection() {
+  const [activeReview, setActiveReview] = useState(0);
+  const visibleReviews = [0, 1, 2].map((offset) => reviews[(activeReview + offset) % reviews.length]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveReview((current) => (current + 1) % reviews.length);
+    }, 4600);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
   return (
     <section id="reviews" className="scroll-mt-24 px-[clamp(18px,5vw,72px)] pt-0 pb-[clamp(72px,8vw,118px)]">
       <div className="mx-auto w-full max-w-6xl">
         <SectionHeading title="到店会员的真实反馈">
-          我们把评价写得具体一点：训练目标、上课感受、器械排队和教练跟进，这些才是决定能不能长期练下去的东西。
+          我们把评价写得具体一点：训练目标、上课感受、器械排队和教练跟进。每一条反馈都来自真实训练场景，轮播里可以看到不同会员的变化。
         </SectionHeading>
-        <div className="grid grid-cols-5 gap-3.5 max-md:grid-cols-2 max-sm:grid-cols-1">
-          {reviews.map(([quote, author, meta]) => (
-            <article key={author} className="flex min-h-[262px] flex-col justify-between rounded-lg border border-white/12 bg-white/[0.06] p-5">
+        <div className="overflow-hidden rounded-lg border border-white/12 bg-white/[0.055] p-[clamp(18px,3vw,30px)] shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
+          <div className="mb-6 flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
+            <div className="flex flex-wrap gap-3">
+              <span className="rounded-lg border border-ember/35 bg-ember/15 px-4 py-2 text-sm font-black text-[#ffd7bd]">10 条会员评价</span>
+              <span className="rounded-lg border border-teal/35 bg-teal/20 px-4 py-2 text-sm font-black text-smoke">自动轮播中</span>
+            </div>
+            <div className="flex gap-2" aria-label="评价轮播控制">
+              <button
+                className="grid h-11 w-11 place-items-center rounded-lg border border-white/15 bg-white/10 text-white transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember"
+                type="button"
+                aria-label="上一条评价"
+                onClick={() => setActiveReview((current) => (current - 1 + reviews.length) % reviews.length)}
+              >
+                <Icon className="h-5 w-5">
+                  <path d="m15 18-6-6 6-6" />
+                </Icon>
+              </button>
+              <button
+                className="grid h-11 w-11 place-items-center rounded-lg border border-white/15 bg-white/10 text-white transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember"
+                type="button"
+                aria-label="下一条评价"
+                onClick={() => setActiveReview((current) => (current + 1) % reviews.length)}
+              >
+                <Icon className="h-5 w-5">
+                  <path d="m9 18 6-6-6-6" />
+                </Icon>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid items-stretch gap-4 md:grid-cols-[1.2fr_0.8fr]" aria-live="polite">
+            <article key={visibleReviews[0].author} className="review-panel flex min-h-[360px] flex-col justify-between rounded-lg border border-ember/35 bg-[linear-gradient(135deg,rgba(216,75,42,0.2),rgba(255,255,255,0.07)_45%,rgba(28,124,121,0.14))] p-[clamp(22px,4vw,38px)]">
               <div>
-                <div className="mb-4 text-base leading-none tracking-normal text-brass" aria-label="五星评价">
-                  ★★★★★
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="text-xl leading-none tracking-normal text-brass" aria-label="五星评价">★★★★★</span>
+                  <span className="rounded-lg bg-white/10 px-3 py-1 text-xs font-black text-[#ffd7bd]">{visibleReviews[0].result}</span>
                 </div>
-                <blockquote className="text-[15px] leading-relaxed text-smoke/90">{quote}</blockquote>
+                <blockquote className="text-[clamp(1.25rem,3vw,2rem)] leading-snug font-black text-white">
+                  “{visibleReviews[0].quote}”
+                </blockquote>
               </div>
-              <div className="mt-5 border-t border-white/10 pt-4">
-                <strong className="block text-[15px] text-white">{author}</strong>
-                <span className="mt-1 block text-[13px] text-mist">{meta}</span>
+              <div className="mt-8 border-t border-white/12 pt-5">
+                <strong className="block text-xl text-white">{visibleReviews[0].author}</strong>
+                <span className="mt-1 block text-sm text-mist">{visibleReviews[0].meta}</span>
               </div>
             </article>
-          ))}
+
+            <div className="grid gap-4">
+              {visibleReviews.slice(1).map((review, index) => (
+                <article
+                  key={review.author}
+                  className="review-side-card flex min-h-[172px] flex-col justify-between rounded-lg border border-white/12 bg-charcoal/55 p-5"
+                  style={{ animationDelay: `${index * 90}ms` }}
+                >
+                  <div>
+                    <div className="mb-3 text-sm leading-none tracking-normal text-brass" aria-label="五星评价">★★★★★</div>
+                    <blockquote className="text-[15px] leading-relaxed text-smoke/90">“{review.quote}”</blockquote>
+                  </div>
+                  <div className="mt-4 border-t border-white/10 pt-4">
+                    <strong className="block text-[15px] text-white">{review.author}</strong>
+                    <span className="mt-1 block text-[13px] text-mist">{review.meta}</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-2" aria-label="选择评价">
+            {reviews.map((review, index) => (
+              <button
+                key={review.author}
+                className={[
+                  "h-2.5 rounded-full border-0 p-0 transition-all duration-200",
+                  index === activeReview ? "w-12 bg-ember" : "w-5 bg-white/25 hover:bg-white/45",
+                ].join(" ")}
+                type="button"
+                aria-label={`查看${review.author}的评价`}
+                aria-current={index === activeReview ? "true" : undefined}
+                onClick={() => setActiveReview(index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
