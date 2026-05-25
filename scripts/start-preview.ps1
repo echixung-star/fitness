@@ -23,6 +23,31 @@ function Test-Preview {
   }
 }
 
+function Get-ProjectPreview {
+  $listeners = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue |
+    Where-Object { $_.LocalAddress -in @("127.0.0.1", "::1", "0.0.0.0", "::") }
+
+  foreach ($listener in $listeners) {
+    $process = Get-CimInstance Win32_Process -Filter "ProcessId = $($listener.OwningProcess)" -ErrorAction SilentlyContinue
+    if ($process -and $process.CommandLine -like "*$Root*" -and $process.CommandLine -like "*next*") {
+      if (Test-Preview $listener.LocalPort) {
+        return [pscustomobject]@{
+          Port = $listener.LocalPort
+          ProcessId = $listener.OwningProcess
+        }
+      }
+    }
+  }
+
+  return $null
+}
+
+$existingPreview = Get-ProjectPreview
+if ($existingPreview) {
+  Write-Output "Preview already running: http://127.0.0.1:$($existingPreview.Port)"
+  exit 0
+}
+
 $listener = Get-NetTCPConnection -State Listen -LocalPort $Port -ErrorAction SilentlyContinue | Select-Object -First 1
 if ($listener) {
   $process = Get-CimInstance Win32_Process -Filter "ProcessId = $($listener.OwningProcess)" -ErrorAction SilentlyContinue
