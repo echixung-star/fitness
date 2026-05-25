@@ -629,97 +629,163 @@ function ReviewsSection() {
 }
 
 function ContactSection() {
+  const storeFacts = [
+    {
+      label: "门店地址",
+      value: "江苏省南京市溧水区淮源大道 26 号",
+      note: "沿街门头，地图搜索完整地址更准确",
+      icon: (
+        <>
+          <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z" />
+          <circle cx="12" cy="10" r="3" />
+        </>
+      ),
+    },
+    {
+      label: "营业时间",
+      value: "06:30 - 23:00",
+      note: "周一至周日开放，早训和晚训都能安排",
+      icon: (
+        <>
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 6v6l4 2" />
+        </>
+      ),
+    },
+    {
+      label: "到店建议",
+      value: "提前 5 分钟",
+      note: "第一次来预留停车、步行和确认入口时间",
+      icon: (
+        <>
+          <path d="M4 19V5" />
+          <path d="M4 5h11l-1.5 4L15 13H4" />
+          <path d="M20 19h-8" />
+          <path d="M16 15v4" />
+        </>
+      ),
+    },
+    {
+      label: "体验流程",
+      value: "前台登记",
+      note: "到店后由教练带看场地并安排动作评估",
+      icon: (
+        <>
+          <path d="M16 21v-2a4 4 0 0 0-8 0v2" />
+          <circle cx="12" cy="7" r="4" />
+          <path d="M19 8v6" />
+          <path d="M22 11h-6" />
+        </>
+      ),
+    },
+  ];
+
+  const arrivalSteps = [
+    ["打开地图搜索完整地址", "输入“江苏省南京市溧水区淮源大道 26 号”，优先选择南京市溧水区的结果。"],
+    ["到达后认准沿街门头", "沿淮源大道靠近 26 号门牌，看到黑铁工厂门头即可进店。"],
+    ["进店先做简单沟通", "前台会确认体验需求，教练会根据目标带你参观训练区和评估动作。"],
+  ];
+
   return (
     <section id="contact" className="scroll-mt-24 px-[clamp(18px,5vw,72px)] pt-0 pb-[clamp(72px,8vw,118px)]">
       <div className="mx-auto w-full max-w-6xl">
-        <div className="grid items-stretch gap-[clamp(28px,5vw,60px)] rounded-lg border border-white/15 bg-[#f1f3f4] p-[clamp(28px,5vw,56px)] text-[#141719] shadow-[0_24px_80px_rgba(0,0,0,0.34)] md:grid-cols-[1fr_0.85fr]">
-          <div>
-            <h2 className="mb-3.5 text-[clamp(2rem,5vw,3.625rem)] leading-[1.04] font-black text-charcoal">到淮源大道 26 号，跟着导航就能到。</h2>
-            <p className="text-[17px] text-[#4d5961]">
-              门店位于南京市溧水区淮源大道 26 号。到店前直接在地图软件搜索完整地址，抵达后认准沿街门头，第一次来建议预留 5 分钟找停车和入口。
-            </p>
-            <div className="mt-7 grid gap-3.5">
-              <ContactRow>
-                <Icon className="mt-0.5 h-5.5 w-5.5 shrink-0 text-ember">
-                  <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z" />
-                  <circle cx="12" cy="10" r="3" />
-                </Icon>
-                江苏省南京市溧水区淮源大道 26 号
-              </ContactRow>
-              <ContactRow>
-                <Icon className="mt-0.5 h-5.5 w-5.5 shrink-0 text-ember">
-                  <path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z" />
-                  <path d="M9 3v15" />
-                  <path d="M15 6v15" />
-                </Icon>
-                导航搜索：淮源大道 26 号，选择南京市溧水区的结果
-              </ContactRow>
-              <ContactRow>
-                <Icon className="mt-0.5 h-5.5 w-5.5 shrink-0 text-ember">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 6v6l4 2" />
-                </Icon>
-                周一至周日 06:30 - 23:00
-              </ContactRow>
-            </div>
-            <ol className="mt-6 grid list-none gap-3 p-0">
-              {[
-                ["打开高德或百度地图", "输入“江苏省南京市溧水区淮源大道 26 号”，按当前位置开始导航。"],
-                ["到达淮源大道后留意门头", "沿淮源大道靠近 26 号门牌，看到健身房门头即可进店。"],
-                ["第一次来建议提前一点", "预留停车、步行和确认入口的时间，进店后前台会引导参观训练区。"],
-              ].map(([title, description], index) => (
-                <li key={title} className="grid grid-cols-[34px_1fr] items-start gap-3 rounded-lg border border-charcoal/10 bg-white/65 p-3.5">
-                  <b className="grid h-[34px] w-[34px] place-items-center rounded-lg bg-[#141719] text-sm text-white">{index + 1}</b>
+        <div className="overflow-hidden rounded-lg border border-white/15 bg-[#eef2f1] text-[#141719] shadow-[0_24px_80px_rgba(0,0,0,0.34)]">
+          <div className="grid items-stretch lg:grid-cols-[1fr_0.82fr]">
+            <div className="p-[clamp(26px,5vw,56px)]">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-ember/25 bg-ember/10 px-3 py-1.5 text-xs font-black text-ember">
+                <span className="h-2 w-2 rounded-full bg-teal" aria-hidden="true" />
+                门店信息
+              </div>
+              <h2 className="max-w-[12ch] text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.02] font-black text-charcoal">
+                到黑铁工厂，别让找路消耗训练状态。
+              </h2>
+              <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-[#4d5961]">
+                门店位于南京市溧水区淮源大道 26 号，沿街进出，早晚时段都适合训练。第一次到店建议直接用地图导航完整地址，到店后前台会带你熟悉动线和训练区。
+              </p>
+
+              <div className="mt-8 grid grid-cols-2 gap-3.5 max-sm:grid-cols-1">
+                {storeFacts.map((fact) => (
+                  <article key={fact.label} className="rounded-lg border border-charcoal/10 bg-white/75 p-4 shadow-[0_10px_28px_rgba(18,22,24,0.06)]">
+                    <div className="mb-3 flex items-center gap-2.5 text-sm font-black text-[#68737a]">
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#141719] text-white">
+                        <Icon className="h-4.5 w-4.5">{fact.icon}</Icon>
+                      </span>
+                      {fact.label}
+                    </div>
+                    <strong className="block text-lg leading-snug text-[#141719]">{fact.value}</strong>
+                    <span className="mt-1.5 block text-sm leading-normal text-[#5b666d]">{fact.note}</span>
+                  </article>
+                ))}
+              </div>
+
+              <div className="mt-8 rounded-lg border border-charcoal/10 bg-[#141719] p-4.5 text-white">
+                <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
                   <div>
-                    <strong className="block text-[15px] leading-snug text-[#141719]">{title}</strong>
-                    <span className="mt-1 block text-sm leading-normal text-[#5b666d]">{description}</span>
+                    <p className="text-sm font-black text-[#ffd7bd]">准备过来体验？</p>
+                    <p className="mt-1 text-sm text-smoke/72">先锁定时段，到店后可以直接做动作评估和场地参观。</p>
                   </div>
-                </li>
-              ))}
-            </ol>
+                  <ButtonLink href="#pricing" variant="primary">
+                    选择体验方案
+                  </ButtonLink>
+                </div>
+              </div>
+            </div>
+            <aside className="grid min-h-[640px] grid-rows-[auto_minmax(280px,1fr)_auto] bg-[#111416] text-white lg:min-h-full" aria-label="黑铁工厂健身房位置地图">
+              <div className="flex items-center justify-between gap-3.5 border-b border-white/10 bg-white/[0.06] p-5">
+                <span className="text-xs font-extrabold tracking-normal text-smoke/65">门店位置</span>
+                <strong className="text-right text-lg leading-tight text-white">
+                  南京溧水
+                  <br />
+                  淮源大道 26 号
+                </strong>
+              </div>
+              <div className="relative overflow-hidden bg-[#182024]">
+                <Image
+                  src="/assets/store-location-map.png"
+                  alt="黑铁工厂健身房位于南京市溧水区淮源大道26号的现代风格地图"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                  className="object-cover"
+                />
+                <div className="absolute right-4 bottom-4 left-4 rounded-lg border border-white/15 bg-[#101214]/90 p-4 backdrop-blur-md">
+                  <p className="text-xs font-black text-[#ffd7bd]">导航关键词</p>
+                  <p className="mt-1 text-lg font-black leading-snug text-white">江苏省南京市溧水区淮源大道 26 号</p>
+                </div>
+              </div>
+              <div className="border-t border-white/10 bg-[#0f1214] p-5">
+                <div className="mb-4 flex flex-wrap gap-3">
+                  <MapAction href="https://uri.amap.com/search?keyword=江苏省南京市溧水区淮源大道26号" primary>
+                    <Icon className="h-4.5 w-4.5">
+                      <path d="M12 21s7-4.4 7-11a7 7 0 1 0-14 0c0 6.6 7 11 7 11Z" />
+                      <circle cx="12" cy="10" r="2.5" />
+                    </Icon>
+                    高德导航
+                  </MapAction>
+                  <MapAction href="https://map.baidu.com/search/江苏省南京市溧水区淮源大道26号">
+                    <Icon className="h-4.5 w-4.5">
+                      <path d="m3 11 18-8-8 18-2-8-8-2Z" />
+                    </Icon>
+                    百度地图
+                  </MapAction>
+                </div>
+                <ol className="grid list-none gap-3 p-0">
+                  {arrivalSteps.map(([title, description], index) => (
+                    <li key={title} className="grid grid-cols-[34px_1fr] items-start gap-3">
+                      <b className="grid h-[34px] w-[34px] place-items-center rounded-lg bg-white/10 text-sm text-[#ffd7bd]">{index + 1}</b>
+                      <div>
+                        <strong className="block text-[15px] leading-snug text-white">{title}</strong>
+                        <span className="mt-1 block text-sm leading-normal text-smoke/64">{description}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </aside>
           </div>
-          <aside className="grid min-h-full grid-rows-[auto_1fr_auto] overflow-hidden rounded-lg border border-charcoal/10 bg-[#111416] text-white shadow-[0_18px_44px_rgba(16,18,20,0.16)]" aria-label="黑铁工厂健身房位置地图">
-            <div className="flex items-center justify-between gap-3.5 bg-white/[0.06] p-4.5">
-              <span className="text-xs font-extrabold tracking-normal text-smoke/65">门店位置</span>
-              <strong className="text-right text-lg leading-tight text-white">
-                南京溧水
-                <br />
-                淮源大道 26 号
-              </strong>
-            </div>
-            <div className="relative min-h-[360px] overflow-hidden bg-[#182024]">
-              <Image
-                src="/assets/store-location-map.png"
-                alt="黑铁工厂健身房位于南京市溧水区淮源大道26号的现代风格地图"
-                fill
-                sizes="(max-width: 768px) 100vw, 42vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="flex flex-wrap justify-start gap-3 bg-[#0f1214] p-4.5">
-              <MapAction href="https://uri.amap.com/search?keyword=江苏省南京市溧水区淮源大道26号" primary>
-                <Icon className="h-4.5 w-4.5">
-                  <path d="M12 21s7-4.4 7-11a7 7 0 1 0-14 0c0 6.6 7 11 7 11Z" />
-                  <circle cx="12" cy="10" r="2.5" />
-                </Icon>
-                高德导航
-              </MapAction>
-              <MapAction href="https://map.baidu.com/search/江苏省南京市溧水区淮源大道26号">
-                <Icon className="h-4.5 w-4.5">
-                  <path d="m3 11 18-8-8 18-2-8-8-2Z" />
-                </Icon>
-                百度地图
-              </MapAction>
-            </div>
-          </aside>
         </div>
       </div>
     </section>
   );
-}
-
-function ContactRow({ children }: { children: ReactNode }) {
-  return <div className="flex items-start gap-3.5 font-bold text-[#2c343a]">{children}</div>;
 }
 
 function MapAction({ href, children, primary = false }: { href: string; children: ReactNode; primary?: boolean }) {
