@@ -607,6 +607,36 @@ function ScheduleSection() {
             ))}
           </div>
         </div>
+        <div
+          id="visit-booking"
+          className="mt-6 grid items-center gap-6 rounded-lg border border-white/15 bg-[#f1f3f4] p-[clamp(22px,4vw,34px)] text-charcoal shadow-[0_22px_68px_rgba(0,0,0,0.24)] md:grid-cols-[0.86fr_1fr_auto]"
+        >
+          <div>
+            <span className="mb-3 block text-sm font-black text-ember">预约到店</span>
+            <h3 className="text-[clamp(1.6rem,3vw,2.25rem)] leading-tight font-black">提前约好时段，进店先做训练评估。</h3>
+            <p className="mt-3 text-[15px] text-[#536069]">
+              首次体验会安排教练带你熟悉场馆、确认训练目标，并根据当天人数推荐合适的小班或自由训练时段。
+            </p>
+          </div>
+          <div className="grid gap-3 text-[15px] text-[#2c343a] sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-3">
+            {[
+              ["01", "确认时段", "建议提前一天预约，早训和晚间课位更紧张。"],
+              ["02", "到店评估", "教练先看基础动作、伤病史和训练目标。"],
+              ["03", "安排体验", "匹配小班、私教评估或自由训练入门路线。"],
+            ].map(([step, title, description]) => (
+              <div key={title} className="grid grid-cols-[38px_1fr] gap-3">
+                <b className="grid h-[38px] w-[38px] place-items-center rounded-lg bg-charcoal text-sm text-white">{step}</b>
+                <div>
+                  <strong className="block leading-snug">{title}</strong>
+                  <span className="mt-1 block text-sm leading-normal text-[#5b666d]">{description}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <ButtonLink href="#contact" variant="primary">
+            预约到店
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );
