@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  --charcoal: #101214;
+  --ink: #171a1d;
+  --steel: #2b3136;
+  --smoke: #edf0f2;
+  --mist: #b8c0c7;
+  --white: #ffffff;
+  --ember: #d84b2a;
+  --brass: #c79b45;
+  --teal: #1c7c79;
+}
+
+@theme inline {
+  --font-sans: "Inter", "Segoe UI", "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", ui-monospace, monospace;
+  --color-charcoal: var(--charcoal);
+  --color-ink: var(--ink);
+  --color-steel: var(--steel);
+  --color-smoke: var(--smoke);
+  --color-mist: var(--mist);
+  --color-ember: var(--ember);
+  --color-brass: var(--brass);
+  --color-teal: var(--teal);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  background: var(--charcoal);
+  color: var(--smoke);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.page-shell {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(216, 75, 42, 0.18), transparent 28rem),
+    linear-gradient(180deg, #111416 0%, #15191c 42%, #0f1113 100%);
+}
+
+.hero-overlay::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background-image:
+    linear-gradient(90deg, rgba(11, 12, 13, 0.94) 0%, rgba(11, 12, 13, 0.68) 45%, rgba(11, 12, 13, 0.18) 100%),
+    linear-gradient(0deg, rgba(15, 17, 19, 1) 0%, rgba(15, 17, 19, 0) 28%);
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  transform: scale(1.03);
+  transition:
+    opacity 800ms ease,
+    transform 6000ms ease;
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.training-photo {
+  background-image:
+    linear-gradient(0deg, rgba(16, 18, 20, 0.58), rgba(16, 18, 20, 0.04)),
+    url("/assets/carousel-strength.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.schedule-bg {
+  background-image:
+    linear-gradient(rgba(16, 18, 20, 0.9), rgba(16, 18, 20, 0.92)),
+    url("https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=1800&q=84");
+  background-position: center;
+  background-size: cover;
+}
